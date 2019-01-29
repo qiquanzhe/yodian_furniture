@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean name="dataSource" class=
+            "org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <!--数据库驱动-->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <!--连接数据库的url-->
+        <property name="url" value="jdbc:mysql://localhost:3306/furniture?characterEncoding=UTF-8"/>
+        <!--连接数据库的用户名-->
+        <property name="username" value="root"/>
+        <!--连接数据库的密码-->
+        <property name="password" value="123456"/>
+    </bean>
+    <!--配置JDBC模板-->
+    <bean name="jdbcTemplate"
+          class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!--配置注入类-->
+    <!--配置name是userAccountDao的bean-->
+    <bean name="userAccountDao"
+          class="com.JDBC.User.userAccountDaoImpl">
+        <!--将jdbcTemplete注入到实例userAccountDao中-->
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <!--配置name是adminDao的bean-->
+    <bean name="adminDao"
+          class="com.JDBC.admin.adminDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <!--配置name是furnitureDao的bean-->
+    <bean name="furnitureDao"
+          class="com.JDBC.Furniture.furnitureDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <!--配置name是imageDao的bean-->
+    <bean name="imageDao"
+          class="com.JDBC.ImgIO.imageDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <bean name="wishcartDao"
+          class="com.JDBC.WishAndCart.wishCartDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+</beans>
